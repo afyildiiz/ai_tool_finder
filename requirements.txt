@@ -1,0 +1,6 @@
+Flask
+psycopg2-binary
+cohere
+requests
+beautifulsoup4
+python-dotenv

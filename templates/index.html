@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <title>Responsive Landing Page with AI Tool Finder</title>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+
+
+    <section class="ai-tool-finder">
+      <div class="container">
+        <h1>AI Tool Finder</h1>
+        <form method="POST">
+          <label for="query">What do you want to do?</label>
+          <input type="text" id="query" name="query" required />
+          <button type="submit">Find AI Tools</button>
+        </form>
+
+        {% if tools %}
+          <h2>Recommended AI Tools:</h2>
+          <ul>
+            {% for tool in tools %}
+              <li>
+                <strong>{{ tool[0] }}</strong>: {{ tool[1] }}<br />
+                <a href="{{ tool[2] }}" target="_blank">Visit Tool</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+
+  <script>
+    let menu = document.querySelector('nav');
+    let menuBtn = document.querySelector('.menu-btn');
+    let closeBtn = document.querySelector('.close-btn');
+
+    menuBtn.addEventListener('click',function(){
+    menu.classList.add('active');
+    })
+    closeBtn.addEventListener('click',function(){
+    menu.classList.remove('active');
+    })
+
+    const bodyEl = document.querySelector("body");
+    const toggleEl = document.querySelector(".fa-moon");
+
+    toggleEl.addEventListener("click", () => {
+    bodyEl.classList.toggle("dark");
+    if (bodyEl.classList.contains("dark")) {
+        toggleEl.classList.replace("fa-moon", "fa-sun");
+    } else {
+        toggleEl.classList.replace("fa-sun", "fa-moon");
+    }
+    });
+  </script>
+</html>
