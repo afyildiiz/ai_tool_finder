@@ -1,68 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/styles.css" />
     <link
-      rel="stylesheet"
-      href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        rel="stylesheet"
+        href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     />
     <title>Responsive Landing Page with AI Tool Finder</title>
-  </head>
-  <body>
+</head>
+<body>
     {% include 'navbar.html' %}
 
-
     <section class="ai-tool-finder">
-      <div class="container">
-        <h1>AI Tool Finder</h1>
-        <form method="POST">
-          <label for="query">What do you want to do?</label>
-          <input type="text" id="query" name="query" required />
-          <button type="submit">Find AI Tools</button>
-        </form>
+        <div class="container">
+            <h1>AI Tool Finder</h1>
 
-        {% if tools %}
-          <h2>Recommended AI Tools:</h2>
-          <ul>
-            {% for tool in tools %}
-              <li>
-                <strong>{{ tool[0] }}</strong>: {{ tool[1] }}<br />
-                <a href="{{ tool[2] }}" target="_blank">Visit Tool</a>
-              </li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
+            <div class="chat-container">
+                <div id="chat-history">
+                    </div>
+                <form method="POST" id="chat-form">
+                    <input type="text" id="query" name="query" placeholder="Bana soru sor" required />
+                    <button type="submit">Gönder</button>
+                </form>
+            </div>
+
+            {% if tools %}
+                <h2>Önerilen AI Araçları:</h2>
+                <ul>
+                    {% for tool in tools %}
+                        <li>
+                            <strong>{{ tool[0] }}</strong>: {{ tool[1] }}<br />
+                            <a href="{{ tool[2] }}" target="_blank">Aracı Ziyaret Et</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if conversation %}
+                <div class="conversation">
+                    <h3>AI Asistan:</h3>
+                    <p>{{ conversation }}</p>
+                </div>
+            {% endif %}
+        </div>
     </section>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-  </body>
+    <script>
+        // JavaScript kodu burada, sohbet geçmişini yönetmek ve formu göndermek için kullanılabilir
+        const chatHistory = document.getElementById('chat-history');
+        const chatForm = document.getElementById('chat-form');
 
-  <script>
-    let menu = document.querySelector('nav');
-    let menuBtn = document.querySelector('.menu-btn');
-    let closeBtn = document.querySelector('.close-btn');
+        chatForm.addEventListener('submit', (event) => {
+            event.preventDefault(); 
 
-    menuBtn.addEventListener('click',function(){
-    menu.classList.add('active');
-    })
-    closeBtn.addEventListener('click',function(){
-    menu.classList.remove('active');
-    })
+            const userInput = document.getElementById('query').value;
 
-    const bodyEl = document.querySelector("body");
-    const toggleEl = document.querySelector(".fa-moon");
+            // Sohbet geçmişine kullanıcı mesajını ekle
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('user-message');
+            userMessage.textContent = userInput;
+            chatHistory.appendChild(userMessage);
 
-    toggleEl.addEventListener("click", () => {
-    bodyEl.classList.toggle("dark");
-    if (bodyEl.classList.contains("dark")) {
-        toggleEl.classList.replace("fa-moon", "fa-sun");
-    } else {
-        toggleEl.classList.replace("fa-sun", "fa-moon");
-    }
-    });
-  </script>
+            // Formu gönder ve yanıtı al (Flask uygulamanızın nasıl yapılandırıldığına bağlı olarak bu kısmı ayarlamanız gerekebilir)
+            fetch('/', {
+                method: 'POST',
+                body: new FormData(chatForm)
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Yanıtı sohbet geçmişine ekle
+                const aiResponse = document.createElement('div');
+                aiResponse.classList.add('ai-response');
+                aiResponse.innerHTML = data; // Yanıtın HTML içeriğini doğrudan ekleyin
+                chatHistory.appendChild(aiResponse);
+
+                // Giriş alanını temizle
+                document.getElementById('query').value = '';
+            });
+        });
+    </script>
+</body>
 </html>
