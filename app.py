@@ -41,8 +41,6 @@ def home():
             prompt = f"""Kullanıcı {user_input} ile ilgili yapay zeka araçları arıyor. İşte bulduğum bazı araçlar:
 
 {tool_descriptions}
-
-Bu araçlar hakkında konuşurken, özelliklerini, kullanım durumlarını ve kullanıcıya nasıl yardımcı olabileceklerini vurgulayan samimi ve bilgilendirici bir dil kullanın. 
 """
         else:
             prompt = f"Kullanıcı {user_input} ile ilgili yapay zeka araçları arıyor, ancak veritabanımda eşleşen bir araç bulamadım. Kullanıcıya anlayışlı bir şekilde yanıt verin ve belki başka bir arama yapmayı önerebilirsiniz."
@@ -54,7 +52,8 @@ Bu araçlar hakkında konuşurken, özelliklerini, kullanım durumlarını ve ku
             temperature=0.7
         )
 
-        return render_template('index.html', tools=relevant_tools, conversation=response.generations[0].text)  
+        # return render_template('index.html', tools=relevant_tools, conversation=response.generations[0].text)  
+        return render_template('conversation.html', tools=relevant_tools, conversation=response.generations[0].text)  # Sadece conversation.html'i döndür
 
     return render_template('index.html')
 

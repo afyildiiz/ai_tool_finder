@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/styles.css" />
+
+    <title>Document</title>
+</head>
+<body>
+        {% if conversation %}
+        <div class="conversation" style="margin-top: 1rem;">
+            <p>{{ conversation }}</p>
+        </div>
+    {% endif %}
+    
+    {% if tools %}
+        <h2>Recommended AI Tools:</h2>
+        <ul>
+            {% for tool in tools %}
+                <li>
+                    <strong>{{ tool[0] }}</strong>: {{ tool[1] }}<br />
+                    <a href="{{ tool[2] }}" target="_blank">Visit Tool</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+</body>
+</html>

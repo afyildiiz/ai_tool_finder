@@ -9,7 +9,7 @@
         rel="stylesheet"
         href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     />
-    <title>Responsive Landing Page with AI Tool Finder</title>
+    <title>AI Tool Finder</title>
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -22,64 +22,41 @@
                 <div id="chat-history">
                     </div>
                 <form method="POST" id="chat-form">
-                    <input type="text" id="query" name="query" placeholder="Bana soru sor" required />
-                    <button type="submit">Gönder</button>
+                    <input type="text" id="query" name="query" placeholder="ask any ai tool..." required />
+                    <button type="submit">Send</button>
                 </form>
             </div>
 
-            {% if tools %}
-                <h2>Önerilen AI Araçları:</h2>
-                <ul>
-                    {% for tool in tools %}
-                        <li>
-                            <strong>{{ tool[0] }}</strong>: {{ tool[1] }}<br />
-                            <a href="{{ tool[2] }}" target="_blank">Aracı Ziyaret Et</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% if conversation %}
-                <div class="conversation">
-                    <h3>AI Asistan:</h3>
-                    <p>{{ conversation }}</p>
+            <div id="results-container">
                 </div>
-            {% endif %}
+
         </div>
     </section>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
-        // JavaScript kodu burada, sohbet geçmişini yönetmek ve formu göndermek için kullanılabilir
         const chatHistory = document.getElementById('chat-history');
         const chatForm = document.getElementById('chat-form');
+        const resultsContainer = document.getElementById('results-container');
 
         chatForm.addEventListener('submit', (event) => {
             event.preventDefault(); 
 
             const userInput = document.getElementById('query').value;
 
-            // Sohbet geçmişine kullanıcı mesajını ekle
-            const userMessage = document.createElement('div');
-            userMessage.classList.add('user-message');
-            userMessage.textContent = userInput;
-            chatHistory.appendChild(userMessage);
-
-            // Formu gönder ve yanıtı al (Flask uygulamanızın nasıl yapılandırıldığına bağlı olarak bu kısmı ayarlamanız gerekebilir)
+            // AJAX isteği gönder
             fetch('/', {
                 method: 'POST',
-                body: new FormData(chatForm)
+                body: new FormData(chatForm) 
             })
-            .then(response => response.text())
+            .then(response => response.text()) 
             .then(data => {
-                // Yanıtı sohbet geçmişine ekle
-                const aiResponse = document.createElement('div');
-                aiResponse.classList.add('ai-response');
-                aiResponse.innerHTML = data; // Yanıtın HTML içeriğini doğrudan ekleyin
-                chatHistory.appendChild(aiResponse);
+                resultsContainer.innerHTML = data;
 
                 // Giriş alanını temizle
                 document.getElementById('query').value = '';
+            })
+            .catch(error => {
+                console.error('Hata oluştu:', error);
             });
         });
     </script>
