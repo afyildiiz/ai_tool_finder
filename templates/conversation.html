@@ -8,23 +8,21 @@
     <title>Document</title>
 </head>
 <body>
-        {% if conversation %}
-        <div class="conversation" style="margin-top: 1rem;">
-            <p>{{ conversation }}</p>
-        </div>
-    {% endif %}
-    
-    {% if tools %}
-        <h2>Recommended AI Tools:</h2>
-        <ul>
-            {% for tool in tools %}
-                <li>
-                    <strong>{{ tool[0] }}</strong>: {{ tool[1] }}<br />
-                    <a href="{{ tool[2] }}" target="_blank">Visit Tool</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+{% if conversation %}
+    <p>{{ conversation }}</p>
+{% endif %}
+
+{% if tools %}
+    <h2>Recommended AI Tools:</h2>
+    <ul>
+        {% for tool in tools %}
+            <li>
+                <strong>{{ tool[0] }}</strong>: {{ tool[1] }}<br />
+                <a href="{{ tool[2] }}" target="_blank">Visit Tool</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 </body>
 </html>

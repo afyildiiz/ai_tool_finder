@@ -38,12 +38,14 @@ def home():
         # Cohere ile conversational yanıt oluştur (güncellenmiş)
         if relevant_tools:
             tool_descriptions = "\n".join([f"- **{tool[0]}**: {tool[1]}" for tool in relevant_tools])
-            prompt = f"""Kullanıcı {user_input} ile ilgili yapay zeka araçları arıyor. İşte bulduğum bazı araçlar:
+            prompt = f"""The user is looking for AI tools related to {user_input}. 
+            Respond to the user in an understanding way and perhaps suggest another search.
+            Do not list tools
 
 {tool_descriptions}
 """
         else:
-            prompt = f"Kullanıcı {user_input} ile ilgili yapay zeka araçları arıyor, ancak veritabanımda eşleşen bir araç bulamadım. Kullanıcıya anlayışlı bir şekilde yanıt verin ve belki başka bir arama yapmayı önerebilirsiniz."
+            prompt = f"The user is looking for AI tools related to {user_input}, but I couldn't find a matching tool in my database. Respond to the user in an understanding way and maybe you can suggest doing another search."
 
         response = co.generate(
             model='command-xlarge-nightly',
@@ -51,9 +53,13 @@ def home():
             max_tokens=200,
             temperature=0.7
         )
+                # Yanıtı ilk iki cümle ile sınırla
+        conversation_text = response.generations[0].text
+        sentences = conversation_text.split('. ')
+        limited_conversation = '. '.join(sentences[:2]) + '.' 
 
         # return render_template('index.html', tools=relevant_tools, conversation=response.generations[0].text)  
-        return render_template('conversation.html', tools=relevant_tools, conversation=response.generations[0].text)  # Sadece conversation.html'i döndür
+        return render_template('conversation.html', tools=relevant_tools, conversation=limited_conversation)  # Sadece conversation.html'i döndür
 
     return render_template('index.html')
 

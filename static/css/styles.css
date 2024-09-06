@@ -2,6 +2,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu:ital,wght@0,500;0,700;1,400&display=swap');
 
+:root {
+  --text-color: hsl(0, 0%, 100%);
+}
+.wrapper {
+  display: grid;
+  place-content: center;
+  background-color: var(--background-color);
+  font-family: "Oswald", sans-serif;
+  font-size: 10rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.wrapper > div {
+  grid-area: 1/1/-1/-1;
+}
+.top {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 48%, 0% 58%);
+}
+.bottom {
+  clip-path: polygon(0% 60%, 100% 50%, 100% 100%, 0% 100%);
+  color: transparent;
+  background: -webkit-linear-gradient(177deg, black 53%, var(--text-color) 65%);
+  background: linear-gradient(177deg, black 53%, var(--text-color) 65%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  transform: translateX(-0.02em);
+}
 
 header{
     width: 100%;
@@ -15,9 +44,14 @@ header{
   font-family: "Oswald", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  color: white;
 }
 
 
+.navbar nav.active {
+  right: 0;
+  transition: all 0.5s ease-in-out;
+}
 .logo img{
   display: block;
   object-fit: cover;
@@ -57,7 +91,7 @@ header{
   cursor: pointer;
   display: none;
 }
-
+/* 
 @media(max-width: 902px){
   .navbar .btn{
     display: block;
@@ -96,7 +130,7 @@ header{
   .content h2{
     font-size: 2.5rem;
   }
-}
+} */
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------- */
@@ -116,33 +150,36 @@ body {
   }
   
   .container {
-    width: 90%;
-    max-width: 1200px;
+
     margin: 0 auto;
     padding: 5px;
   }
   
   /* AI Tool Finder bölümü */
   .ai-tool-finder {
-    text-align: center;
-    background-color: #fff;
-    padding: 40px;
+    text-align: left;
+    list-style-type: none;
+    background-color: #202020;
+    padding: 14px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    /* margin-top: 50px; */
     width: 100%;
-    max-width: 1200px;
+    /* max-width: 1400px; */
   }
   
-  .ai-tool-finder h1 {
-    margin-bottom: 20px;
-    color: #333;
+  h1 {
+    /* margin-bottom: 20px; */
+    margin-top: 2rem;
+    color: #ffffff;
   }
   
   .ai-tool-finder form {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
+    margin: 20px;
+  
   }
   
   .ai-tool-finder label {
@@ -160,8 +197,8 @@ body {
   }
   
   .ai-tool-finder button {
-    padding: 10px 20px;
-    font-size: 18px;
+    /* padding: 10px 20px; */
+    /* font-size: 18px; */
     color: white;
     background-color: #333;
     border: none;
@@ -175,25 +212,147 @@ body {
   
   /* Recommended AI Tools listesi */
   .ai-tool-finder ul {
-    list-style-type: none;
-    padding: 0;
+    list-style-type: disc;
+    padding-left: 20px;
     margin-top: 20px;
-    text-align: left;
+    color: #ffffff; /* Metin rengini beyaz yapalım */
   }
   
   .ai-tool-finder ul li {
     margin-bottom: 15px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    background-color: transparent; /* Arka planı şeffaf yap */
+    border: none; /* Kenarlıkları kaldır */
+    box-shadow: none; /* Gölgeyi kaldır */
   }
   
   .ai-tool-finder ul li a {
     color: #007BFF;
-    text-decoration: none;
+    text-decoration: underline;
   }
   
   .ai-tool-finder ul li a:hover {
     text-decoration: underline;
   }
+
+
+  .chat {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+    max-height: 500px;
+}
+
+.chat li {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.chat li.self {
+    justify-content: flex-end;
+}
+
+.chat li.other {
+    justify-content: flex-start;
+}
+
+
+.chat .msg {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #4f4f4f;
+    position: relative;
+    font-size: 14px;
+}
+
+.chat li.self .msg {
+    background-color: #4d4a4a;
+    color: #fff;
+    border-bottom-right-radius: 0;
+}
+
+.chat li.other .msg {
+    background-color: #4d4a4a;
+    border-bottom-left-radius: 0;
+    color: white;
+}
+
+.msg p {
+    margin: 0;
+}
+
+.msg time {
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+    color: #666;
+}
+
+textarea:focus{
+  color: white;
+}
+.chat__conversation-panel__input {
+  color: white;
+  width: 95%;
+  height: 100%;
+  outline: none;
+  position: relative;
+  color: var(--chat-text-color);
+  font-size: 13px;
+  background: transparent;
+  border: 0;
+  font-family: "Lato", sans-serif;
+  resize: none;
+  background-color: #333;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+
+.chat__conversation-panel__button {
+  height: 60px;
+  border-radius: 10px;
+  margin-left: 10px;
+  background: grey;
+  width: 5%;
+  border: 0;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+
+
+/* ... (diğer CSS stilleriniz) */
+
+.chat-container {
+
+  /* Sohbet bölümü için stiller */
+  display: flex; /* Flexbox kullanarak düzeni yönet */
+  flex-direction: column; /* Elemanları dikey olarak sırala */
+  overflow-y: auto; /* Sohbet geçmişi taştığında kaydırma çubuğu ekle */
+  
+}
+
+.typezone {
+  /* Konuşma çubuğunu sabitle */
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  width: 100%; /* Genişliği tam sayfa yap */
+
+}
+
+/* Tool Description */
+.tool-description {
+  font-size: 14px;
+  color: #ddd; /* Açık gri */
+}
+
+/* Sohbet geçmişi stilini güncelle */
+.chat {
+  flex-grow: 1; /* Sohbet geçmişinin boş alanı doldurmasını sağla */
+}
