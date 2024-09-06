@@ -36,6 +36,16 @@
 .wrapper > div {
   grid-area: 1/1/-1/-1;
 }
+
+@media(max-width: 902px){
+  .wrapper{
+    font-size: 6rem;
+  }
+  .navbar .brand{
+    display: none;
+  }
+}
+
 .top {
   clip-path: polygon(0% 0%, 100% 0%, 100% 48%, 0% 58%);
 }
@@ -72,7 +82,7 @@ header{
 .logo {
   display: block;
   object-fit: cover;
-  width: 30%;
+  width: 15%;
 }
 .navbar{
   display: flex;
@@ -81,8 +91,9 @@ header{
 }
 .navbar nav{
   display: flex;
+  /* justify-content: flex-end; */
   align-items: center;
-  padding: 1.5rem 0;
+  /* padding: 1.5rem 0; */
 }
 .navbar nav li{
   list-style: none;
@@ -296,6 +307,15 @@ body {
     color: white;
 }
 
+.other .msg {
+  /* ... diğer stiller ... */
+  animation: fadeIn 1s ease; /* fadeIn animasyonunu uygula */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 .msg p {
     margin: 0;
 }
@@ -313,7 +333,7 @@ textarea:focus{
 .chat__conversation-panel__input {
   color: white;
   width: 95%;
-  height: 100%;
+  height: 100%; /* Yüksekliğin nasıl belirlendiğine dikkat edin, bu dikey ortalamayı etkileyebilir */
   outline: none;
   position: relative;
   color: var(--chat-text-color);
@@ -325,10 +345,19 @@ textarea:focus{
   padding: 15px;
   border-radius: 50px;
   font-size: 16px;
-
-
+  display: flex;        /* Flexbox kullan */
+  flex-direction: column; /* Elemanları dikey olarak sırala */
+  justify-content: center; /* Dikey olarak ortala */transition: 0.3s ease all;
 }
 
+.chat__conversation-panel__input::placeholder{
+  line-height: 30px;
+}
+.chat__conversation-panel__input:hover{
+  border: 2px solid #00ffff; /* Neon mavisi kenarlık ekle */
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; /* Neon mavisi gölge ekle */
+
+}
 
 .chat__conversation-panel__button {
   height: 60px;

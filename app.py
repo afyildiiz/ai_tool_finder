@@ -4,21 +4,48 @@ from flask import Flask, request, render_template
 import psycopg2
 import os
 from dotenv import load_dotenv
+from flask_mail import Mail, Message
 
 load_dotenv()
-co = cohere.Client(os.getenv("COHERE_API_KEY")) # Replace with your actual Cohere API key
+co = cohere.Client(os.getenv("COHERE_API_KEY"))
 
 app = Flask(__name__)
+
+# E-posta yapılandırması
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  
+app.config['MAIL_PORT'] = 465 
+app.config['MAIL_USE_TLS'] = False  
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')  
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
+mail = Mail(app)
 
 @app.route('/about')
 def about():
     return render_template('about.html')
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+
+        comment = request.form['text']
+
+        # eposta mesajını oluştur
+        msg = Message('Yeni İletişim Formu Gönderimi', sender=email, recipients=[os.environ.get('MAIL_USERNAME')])
+        msg.body = f"İsim: {name}\nE-posta: {email}\n\n {comment}"
+
+        # E-postayı gönder
+        mail.send(msg)
+
+        feedback= "Message has been sent!"
+        return render_template('contact.html', data=feedback)  # data değişkenini gönder
+
     return render_template('contact.html')
 
-# AI araçlarını JSON dosyasından yükle
+# ai araçlarını json dosyasından yükle
 def load_ai_tools_from_json():
     with open('ai_tools.json', 'r') as f:
         return json.load(f)
@@ -28,14 +55,14 @@ def home():
     if request.method == 'POST':
         user_input = request.form['query']
 
-        # AI araçlarını JSON'dan yükle
+        # ai araçlarını json'dan yükle
         all_tools = load_ai_tools_from_json()
 
-        # Kullanıcı girdisindeki anahtar kelimeleri kullanarak araçları filtrele (iyileştirilmiş)
+        # kullanıcı girdisindeki anahtar kelimeleri kullanarak araçları filtrele
         user_keywords = user_input.lower().split()
         relevant_tools = [tool for tool in all_tools if any(keyword in tool[0].lower() or keyword in tool[1].lower() for keyword in user_keywords)]
 
-        # Cohere ile conversational yanıt oluştur (güncellenmiş)
+        # cohere ile conversational yanıt oluştur
         if relevant_tools:
             tool_descriptions = "\n".join([f"- **{tool[0]}**: {tool[1]}" for tool in relevant_tools])
             prompt = f"""The user is looking for AI tools related to {user_input}. 
@@ -53,7 +80,7 @@ def home():
             max_tokens=200,
             temperature=0.7
         )
-                # Yanıtı ilk iki cümle ile sınırla
+                # yanıtı ilk iki cümle ile sınırla
         conversation_text = response.generations[0].text
         sentences = conversation_text.split('. ')
         limited_conversation = '. '.join(sentences[:2]) + '.' 

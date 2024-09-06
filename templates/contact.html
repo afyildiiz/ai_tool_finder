@@ -14,13 +14,65 @@
     {% include 'navbar.html' %}
 
     <h1>Contact With Us!</h1>
-
-    <form>      
+    
+    <!-- <form method="POST" action="{{ url_for('contact') }}">  
         <input name="name" type="text" class="feedback-input" placeholder="Name" />   
         <input name="email" type="text" class="feedback-input" placeholder="Email" />
         <textarea name="text" class="feedback-input" placeholder="Comment"></textarea>
         <input type="submit" value="SUBMIT"/>
-      </form>
+      </form> -->
+
+      <div class="background">
+        <div class="container">
+          <div class="screen">
+            <div class="screen-header">
+              <div class="screen-header-left">
+                <div class="screen-header-button close"></div>
+                <div class="screen-header-button maximize"></div>
+                <div class="screen-header-button minimize"></div>
+              </div>
+              <div class="screen-header-right">
+                <div class="screen-header-ellipsis"></div>
+                <div class="screen-header-ellipsis"></div>
+                <div class="screen-header-ellipsis"></div>
+              </div>
+            </div>
+            <div class="screen-body">
+              <div class="screen-body-item left">
+                <div class="app-title">
+                  <span>CONTACT</span>
+                  <span>US</span>
+                </div>
+                <div class="app-contact">CONTACT INFO : +90 535 236 1618</div>
+              </div>
+              <div class="screen-body-item">
+                <div class="app-form">
+                  <form method="POST" action="{{ url_for('contact') }}">
+                  <div class="app-form-group">
+                    <input name="name" class="app-form-control" placeholder="Name" value="">
+                  </div>
+                  <div class="app-form-group">
+                    <input name="email" class="app-form-control" placeholder="EMAIL">
+                  </div>
+                  <div class="app-form-group message">
+                    <input name="text" class="app-form-control" placeholder="MESSAGE">
+                  </div>
+                  <div class="app-form-group buttons">
+                    <input type="submit" value="SUBMIT" class="app-form-button">
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="credits">
+            {% if data %}
+              {{data}}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
   
   
 </body>
