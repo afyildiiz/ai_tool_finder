@@ -13,8 +13,8 @@
             <div style="margin-left: 10px;" class="logo"><b></b>
               <img alt="Logo" src="../static/img/rda-ai-logo.png" width="50" />
             </div>
-            <div class="brand" style="display: flex;justify-content: flex-start;">
-              <p href="" style="text-decoration: none;">AI Tool Finder</p>
+            <div class="middle-text">
+              Find Your Own
             </div>
             <nav>
               <div class="btn">
@@ -33,18 +33,18 @@
 
       <script>
         const menuBtn = document.querySelector('.menu-btn');
-const closeBtn = document.querySelector('.close-btn');
-const nav = document.querySelector('nav');
-nav.style.zIndex="2"
+        const closeBtn = document.querySelector('.close-btn');
+        const nav = document.querySelector('nav');
+        nav.style.zIndex="2"
 
-menuBtn.addEventListener('click', () => {
-  nav.classList.add('active');
+        menuBtn.addEventListener('click', () => {
+          nav.classList.add('active');
 
-});
+        });
 
-closeBtn.addEventListener('click', () => {
-  nav.classList.remove('active');
-});
+        closeBtn.addEventListener('click', () => {
+          nav.classList.remove('active');
+        });
       </script>
 </body>
 </html>
