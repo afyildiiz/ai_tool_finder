@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Uygulamanın çalışacağı portu belirt
-EXPOSE 5000
+EXPOSE 8000
 
 # Uygulamayı başlat
 CMD ["flask", "run", "--host=0.0.0.0"]
