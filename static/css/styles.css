@@ -235,7 +235,7 @@ body {
     padding: 0;
     margin: 0;
     overflow-y: scroll;
-    max-height: 500px;
+    max-height: 600px;
 }
 
 .chat li {
@@ -308,12 +308,13 @@ textarea:focus{
   /* font-family: "Lato", sans-serif; */
   resize: none;
   background-color: #333;
-  padding: 15px;
+  padding: 10px;
   border-radius: 50px;
   font-size: 16px;
   display: flex;        /* Flexbox kullan */
   flex-direction: column; /* Elemanları dikey olarak sırala */
-  justify-content: center; /* Dikey olarak ortala */transition: 0.3s ease all;
+  justify-content: center; /* Dikey olarak ortala */
+  transition: 0.3s ease all;
 }
 
 .chat__conversation-panel__input::placeholder{
@@ -347,7 +348,10 @@ textarea:focus{
   display: flex; /* Flexbox kullanarak düzeni yönet */
   flex-direction: column; /* Elemanları dikey olarak sırala */
   overflow-y: auto; /* Sohbet geçmişi taştığında kaydırma çubuğu ekle */
-  
+  flex-grow: 1; /* Sohbet geçmişinin boş alanı doldurmasını sağla */
+  max-height: calc(100vh - 200px); /* Örnek bir max-height değeri */
+
+
 }
 
 .typezone {
@@ -356,6 +360,7 @@ textarea:focus{
   bottom: 20px;
   left: 0;
   right: 0;
+  flex-shrink: 0; /* typezone'un küçülmesini engelle */
   width: 100%; /* Genişliği tam sayfa yap */
 
 }

@@ -1,20 +1,15 @@
 # Temel imaj olarak Python 3.x kullan
-FROM python:3.9-slim-buster
+FROM python:3.11
 
-# Çalışma dizini oluştur
+# Çalışma dizinini ayarla
 WORKDIR /app
 
-# Gerekli bağımlılıkları kopyala
+# Bağımlılıkları kopyala ve yükle
 COPY requirements.txt requirements.txt
-
-# Bağımlılıkları yükle
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Uygulama kodunu kopyala
 COPY . .
 
-# Uygulamanın çalışacağı portu belirt
-EXPOSE 8000
-
-# Uygulamayı başlat
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Flask uygulamasını çalıştırmak için komut
+CMD ["python", "app.py", "--host=0.0.0.0"]

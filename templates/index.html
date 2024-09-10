@@ -53,7 +53,10 @@
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
                 chatForm.dispatchEvent(new Event('submit'));
+                queryInput.value = '';
+                chatHistory.scrollTop = chatHistory.scrollHeight;
             }
+
         });
 
         chatForm.addEventListener('submit', (event) => {
@@ -99,7 +102,6 @@
                 chatHistory.appendChild(aiResponse);
 
                 // Giriş alanını temizle ve sohbeti aşağı kaydır
-                queryInput.value = '';
                 chatHistory.scrollTop = chatHistory.scrollHeight;
             })
             .catch(error => {
