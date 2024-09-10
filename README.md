@@ -13,7 +13,7 @@ AI Tool Finder is a web application that helps the user find the most suitable A
 ## Usage
 
 1. Run the app.
-2. Enter a query in the search bar describing the task or goal you want to accomplish.
+2. Enter a query in the chat field describing the task or goal you want to accomplish.
 3. Review the AI tools that the app suggests to you.
 4. View the details of the tools you are interested in and read user reviews.
 5. Choose the tool that suits you best and start using it!
