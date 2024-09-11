@@ -13,6 +13,8 @@
   margin-right: 10px; /* Spinner ile metin arasında boşluk bırak */
 }
 
+
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -155,12 +157,20 @@ body {
     list-style-type: none;
     background-color: #202020;
     padding: 14px;
+    overflow-y: auto;
     border-radius: 8px;
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     /* margin-top: 50px; */
     width: 100%;
     /* max-width: 1400px; */
+    overflow-y: auto; /* Dikey taşmayı kaydırılabilir yap */
+    -ms-overflow-style: none; /* Internet Explorer ve Edge için kaydırma çubuğunu gizle */
+    scrollbar-width: none; /* Firefox için kaydırma çubuğunu gizle */
   }
+  .ai-tool-finder::-webkit-scrollbar { 
+    display: none; /* Chrome, Safari ve Opera için kaydırma çubuğunu gizle */
+  }
+  
   
   h1 {
     /* margin-bottom: 20px; */
@@ -234,8 +244,8 @@ body {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    overflow-y: scroll;
-    max-height: 600px;
+    /* overflow-y: scroll; */
+    max-height: auto;
 }
 
 .chat li {
@@ -347,7 +357,7 @@ textarea:focus{
   /* Sohbet bölümü için stiller */
   display: flex; /* Flexbox kullanarak düzeni yönet */
   flex-direction: column; /* Elemanları dikey olarak sırala */
-  overflow-y: auto; /* Sohbet geçmişi taştığında kaydırma çubuğu ekle */
+  /* overflow-y: auto;  */
   flex-grow: 1; /* Sohbet geçmişinin boş alanı doldurmasını sağla */
   max-height: calc(100vh - 200px); /* Örnek bir max-height değeri */
 
@@ -357,7 +367,7 @@ textarea:focus{
 .typezone {
   /* Konuşma çubuğunu sabitle */
   position: fixed;
-  bottom: 20px;
+  bottom: 0;
   left: 0;
   right: 0;
   flex-shrink: 0; /* typezone'un küçülmesini engelle */

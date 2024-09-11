@@ -1,4 +1,4 @@
-#!C:\Users\fatih\Desktop\31\ai_tool_finder\winvenv\Scripts\python.exe
+#!C:\Users\fatih\Desktop\projects\ai_tool_finder\winvenv\Scripts\python.exe
 
 import sys
 import json

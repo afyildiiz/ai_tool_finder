@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\fatih\Desktop\31\ai_tool_finder\winvenv
+set VIRTUAL_ENV=C:\Users\fatih\Desktop\projects\ai_tool_finder\winvenv
 
 if not defined PROMPT set PROMPT=$P$G
 
