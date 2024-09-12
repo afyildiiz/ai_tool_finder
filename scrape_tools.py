@@ -32,11 +32,9 @@ def save_tools_to_json(tools):
     with open('ai_tools.json', 'w') as f:
         json.dump(tools, f, indent=4)  # Write data with indentation for readability
 
-# ... (save_tools_to_postgres function)
 
 # Ana program fonksiyonu
 if __name__ == "__main__":
     tools = scrape_ai_tools()
-    # save_tools_to_postgres(tools)
     save_tools_to_json(tools)  # Call the new function to save to JSON
     print("AI araçları veritabanına ve JSON dosyasına kaydedildi.")
