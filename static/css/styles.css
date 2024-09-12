@@ -90,7 +90,7 @@ header{
 .logo {
   display: block;
   object-fit: cover;
-  width: 17.8%;
+  width: 13.5%;
 }
 .navbar{
   display: flex;
@@ -355,6 +355,7 @@ textarea:focus{
 /* ... (diğer CSS stilleriniz) */
 
 .chat-container {
+  position: relative;
 
   /* Sohbet bölümü için stiller */
   display: flex; /* Flexbox kullanarak düzeni yönet */
@@ -372,10 +373,12 @@ textarea:focus{
   bottom: 0;
   left: 0;
   right: 0;
-  flex-shrink: 0; /* typezone'un küçülmesini engelle */
-  width: 100%; /* Genişliği tam sayfa yap */
+  flex-shrink: 0; 
+  width: 100%; 
+  z-index: 1000; 
 
 }
+
 
 /* Tool Description */
 .tool-description {

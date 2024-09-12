@@ -29,7 +29,7 @@
             <div class="typezone">
                 <form id="chat-form">
                     <textarea type="text" id="query" class="chat__conversation-panel__input" name="query" placeholder="Say something"></textarea>
-                    <button type="submit" class="chat__conversation-panel__button panel-item btn-icon send-message-button send" >
+                    <button id="submit" type="submit" class="chat__conversation-panel__button panel-item btn-icon send-message-button send" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1036">
                             <line x1="22" y1="2" x2="11" y2="13"></line>
                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -44,72 +44,87 @@
     </section>
 
     <script>
-        const chatHistory = document.getElementById('chat-history');
-        const chatForm = document.getElementById('chat-form');
-        const resultsContainer = document.getElementById('results-container');
-        const queryInput = document.getElementById('query');
+const chatHistory = document.getElementById('chat-history');
+const chatForm = document.getElementById('chat-form');
+const resultsContainer = document.getElementById('results-container');
+const queryInput = document.getElementById('query');
+const button = document.getElementById('submit');
 
-        queryInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                chatForm.dispatchEvent(new Event('submit'));
-                queryInput.value = '';
-                chatHistory.scrollTop = chatHistory.scrollHeight;
-            }
+queryInput.addEventListener('click', (event) => {
+    queryInput.value = '';
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+});
 
-        });
+queryInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        chatForm.dispatchEvent(new Event('submit'));
+        queryInput.value = '';
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+});
 
-        chatForm.addEventListener('submit', (event) => {
-            event.preventDefault();
+chatForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-            const userInput = queryInput.value.trim();
+    const userInput = queryInput.value.trim();
 
-            if (userInput === '') {
-                return;
-            }
+    if (userInput === '') {
+        return;
+    }
 
-            // Kullanıcı mesajını sohbet geçmişine ekle (spinner ile)
-            const userMessage = document.createElement('li');
-            userMessage.classList.add('self');
-            userMessage.innerHTML = `
-            <div class="spinner"></div> 
-                <div class="msg">
-                    <p>${userInput}</p>
-                    <time>${new Date().toLocaleTimeString()}</time>
-                </div>
-            `;
-            chatHistory.appendChild(userMessage);
+    // Kullanıcı mesajını sohbet geçmişine ekle (spinner ile)
+    const userMessage = document.createElement('li');
+    userMessage.classList.add('self');
+    userMessage.innerHTML = `
+    <div class="spinner"></div> 
+        <div class="msg">
+            <p>${userInput}</p>
+            <time>${new Date().toLocaleTimeString()}</time>
+        </div>
+    `;
+    chatHistory.appendChild(userMessage);
 
-            // AJAX isteği gönder
-            fetch('/', {
-                method: 'POST',
-                body: new FormData(chatForm)
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Spinner'ı kaldır
-                userMessage.querySelector('.spinner').remove();
+    // AJAX isteği gönder
+    fetch('/', {
+        method: 'POST',
+        body: new FormData(chatForm)
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Spinner'ı kaldır
+        userMessage.querySelector('.spinner').remove();
 
-                // Yanıtı sohbet geçmişine ekle
-                const aiResponse = document.createElement('li');
-                aiResponse.classList.add('other');
-                aiResponse.innerHTML = `
-                    <div class="msg">
-                        <p>${data}</p>
-                        <time>${new Date().toLocaleTimeString()}</time>
-                    </div>
-                `;
-                chatHistory.appendChild(aiResponse);
+        // Yanıtı sohbet geçmişine ekle
+        const aiResponse = document.createElement('li');
+        aiResponse.classList.add('other');
+        aiResponse.innerHTML = `
+            <div class="msg">
+                <p>${data}</p>
+                <time>${new Date().toLocaleTimeString()}</time>
+            </div>
+        `;
+        chatHistory.appendChild(aiResponse);
 
-                // Giriş alanını temizle ve sohbeti aşağı kaydır
-                chatHistory.scrollTop = chatHistory.scrollHeight;
-            })
-            .catch(error => {
-                console.error('Hata oluştu:', error);
-                // Hata durumunda spinner'ı kaldır
-                userMessage.querySelector('.spinner').remove();
-            });
-        });
+        // Giriş alanını temizle ve sohbeti aşağı kaydır
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    })
+    .catch(error => {
+        console.error('Hata oluştu:', error);
+        // Hata durumunda spinner'ı kaldır
+        userMessage.querySelector('.spinner').remove();
+    });
+});
+
+// Butona tıklama olayını dinleyin
+button.addEventListener('click', (event) => {
+    // Formu gönder
+    chatForm.dispatchEvent(new Event('submit'));
+
+    // Input alanını temizle
+    queryInput.value = '';
+});
+
     </script>
 </body>
 </html>
