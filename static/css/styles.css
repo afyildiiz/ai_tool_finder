@@ -350,6 +350,8 @@ textarea:focus{
 
 
 
+
+
 /* ... (diğer CSS stilleriniz) */
 
 .chat-container {
@@ -386,7 +388,11 @@ textarea:focus{
   flex-grow: 1; /* Sohbet geçmişinin boş alanı doldurmasını sağla */
 }
 
-
+@media(max-width: 600px){
+  .chat__conversation-panel__button{
+    width: 25%;
+  }
+}
 
 
 /* MIDDLE TEXT */
